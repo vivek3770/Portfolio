@@ -5,11 +5,25 @@ import Chatbot from './components/Chatbot';
 import { Github, Linkedin } from './components/BrandIcons';
 
 // ==========================================
-// SIMPLE ICONS CDN helper
-// https://cdn.simpleicons.org/{slug}/hex
+// LINKS & SOCIAL CONSTANTS (from links.txt)
 // ==========================================
-const SI = (slug, hex = '94a3b8') =>
-  `https://cdn.simpleicons.org/${slug}/${hex}`;
+const LINKS = {
+  github: 'https://github.com/vivek3770',
+  linkedin: 'https://www.linkedin.com/in/vivek-kumar-aieng/',
+  leetcode: 'https://leetcode.com/u/Vivekk_01/',
+  codechef: 'https://www.codechef.com/users/tower_resin_11',
+  huggingface: 'https://huggingface.co/Monkey3770',
+  codemind: 'https://github.com/vivek3770/CodeMind',
+  safeops: 'https://github.com/SafeOps-AI-Org',
+  multimodal: 'https://github.com/vivek3770/Amazon_ML_Challenge',
+};
+
+// Simple Icons CDN helper
+const SI = (slug, hex = '94a3b8') => `https://cdn.simpleicons.org/${slug}/${hex}`;
+
+// ==========================================
+// DATA DEFINITIONS
+// ==========================================
 
 const SKILL_CATEGORIES = [
   {
@@ -17,10 +31,10 @@ const SKILL_CATEGORIES = [
     emoji: '⌨️',
     color: '#22d3ee',
     items: [
-      { name: 'Python',     icon: SI('python',     '22d3ee') },
-      { name: 'Java',       icon: SI('openjdk',    '22d3ee') },
+      { name: 'Python', icon: SI('python', '3776ab') },
+      { name: 'Java', icon: SI('openjdk', 'ed8b00') },
       { name: 'JavaScript', icon: SI('javascript', 'f7df1e') },
-      { name: 'C',          icon: SI('c',          '22d3ee') },
+      { name: 'C', icon: SI('c', 'a8b9cc') },
     ],
   },
   {
@@ -28,25 +42,25 @@ const SKILL_CATEGORIES = [
     emoji: '🧠',
     color: '#a78bfa',
     items: [
-      { name: 'PyTorch',       icon: SI('pytorch',     'ee4c2c') },
-      { name: 'TensorFlow',    icon: SI('tensorflow',  'ff6f00') },
-      { name: 'Scikit-Learn',  icon: SI('scikitlearn', 'f7931e') },
-      { name: 'LightGBM',      icon: SI('lightgbm',   'a78bfa') },
-      { name: 'OpenCV',        icon: SI('opencv',      '5c3ee8') },
-      { name: 'Hugging Face',  icon: SI('huggingface', 'ffd21e') },
+      { name: 'PyTorch', icon: SI('pytorch', 'ee4c2c') },
+      { name: 'TensorFlow', icon: SI('tensorflow', 'ff6f00') },
+      { name: 'Scikit-Learn', icon: SI('scikitlearn', 'f7931e') },
+      { name: 'LightGBM', icon: null },
+      { name: 'OpenCV', icon: SI('opencv', '5c3ee8') },
+      { name: 'Hugging Face', icon: SI('huggingface', 'ffd21e') },
     ],
   },
   {
-    label: 'GenAI & Agentic Systems',
+    label: 'GenAI & Agents',
     emoji: '🤖',
     color: '#22d3ee',
     items: [
-      { name: 'LangChain',      icon: SI('langchain',    '1c3c3c') },
-      { name: 'LangGraph',      icon: null },
-      { name: 'ChromaDB',       icon: null },
-      { name: 'RAG Pipelines',  icon: null },
-      { name: 'Gemini API',     icon: SI('google',       '4285f4') },
-      { name: 'Claude API',     icon: SI('anthropic',    'cc9b7a') },
+      { name: 'LangChain', icon: SI('langchain', '1c3c3c') },
+      { name: 'LangGraph', icon: null },
+      { name: 'ChromaDB', icon: null },
+      { name: 'RAG Pipelines', icon: null },
+      { name: 'Gemini API', icon: SI('google', '4285f4') },
+      { name: 'Claude API', icon: SI('anthropic', 'cc9b7a') },
     ],
   },
   {
@@ -54,9 +68,9 @@ const SKILL_CATEGORIES = [
     emoji: '🎨',
     color: '#4ade80',
     items: [
-      { name: 'React',   icon: SI('react',  '61dafb') },
-      { name: 'HTML5',   icon: SI('html5',  'e34f26') },
-      { name: 'CSS3',    icon: SI('css3',   '1572b6') },
+      { name: 'React', icon: SI('react', '61dafb') },
+      { name: 'HTML5', icon: SI('html5', 'e34f26') },
+      { name: 'CSS3', icon: SI('css3', '1572b6') },
     ],
   },
   {
@@ -64,21 +78,19 @@ const SKILL_CATEGORIES = [
     emoji: '⚡',
     color: '#e85d5d',
     items: [
-      { name: 'FastAPI',   icon: SI('fastapi',  '009688') },
-      { name: 'Node.js',   icon: SI('nodedotjs','5fa04e') },
-      { name: 'Express',   icon: SI('express',  'ffffff') },
+      { name: 'FastAPI', icon: SI('fastapi', '009688') },
+      { name: 'Node.js / Express (Familiar)', icon: SI('nodedotjs', '5fa04e') },
       { name: 'REST APIs', icon: null },
     ],
   },
   {
     label: 'Databases',
     emoji: '🗄️',
-    color: '#f97316',
+    color: '#f59e0b',
     items: [
-      { name: 'MongoDB',    icon: SI('mongodb',    '47a248') },
-      { name: 'MySQL',      icon: SI('mysql',      '4479a1') },
+      { name: 'MongoDB', icon: SI('mongodb', '47a248') },
+      { name: 'MySQL', icon: SI('mysql', '4479a1') },
       { name: 'PostgreSQL', icon: SI('postgresql', '4169e1') },
-      { name: 'Redis',      icon: SI('redis',      'ff4438') },
     ],
   },
   {
@@ -86,11 +98,11 @@ const SKILL_CATEGORIES = [
     emoji: '🚀',
     color: '#22d3ee',
     items: [
-      { name: 'Docker',  icon: SI('docker',  '2496ed') },
-      { name: 'Git',     icon: SI('git',     'f05032') },
-      { name: 'GitHub',  icon: SI('github',  'ffffff') },
-      { name: 'Vercel',  icon: SI('vercel',  'ffffff') },
-      { name: 'Linux',   icon: SI('linux',   'fcc624') },
+      { name: 'Docker', icon: SI('docker', '2496ed') },
+      { name: 'Git', icon: SI('git', 'f05032') },
+      { name: 'GitHub', icon: SI('github', 'ffffff') },
+      { name: 'Vercel', icon: SI('vercel', 'ffffff') },
+      { name: 'Linux', icon: SI('linux', 'fcc624') },
       { name: 'Postman', icon: SI('postman', 'ff6c37') },
     ],
   },
@@ -103,68 +115,95 @@ const PROJECTS = [
     subtitle: 'AI-Powered Full-Stack IDE',
     desc: 'An intelligent development environment with Docker-sandboxed code execution, LangGraph multi-agent autonomous debugger, and ChromaDB RAG documentation retrieval. The AI agent detects runtime errors and autonomously proposes + applies fixes.',
     tech: ['FastAPI', 'LangGraph', 'Docker', 'ChromaDB', 'React', 'MongoDB'],
-    github: 'https://github.com/vivekku9873',
+    github: LINKS.codemind,
     accent: '#22d3ee',
+    featured: true,
   },
   {
     number: '02',
     title: 'SafeOps AI',
     subtitle: 'Multi-Agent DevOps Security Copilot',
-    desc: 'Autonomous AI copilot that monitors infrastructure logs in real-time, detects anomalies with YOLOv8, classifies threats via a LangGraph state graph, and auto-generates remediation shell commands without human intervention.',
+    desc: 'Autonomous AI copilot that monitors infrastructure logs in real-time, detects anomalies with YOLOv8, classifies threats via a LangGraph state graph, and auto-generates remediation shell commands.',
     tech: ['Python', 'LangGraph', 'YOLOv8', 'FastAPI', 'MongoDB', 'LangChain'],
-    github: 'https://github.com/vivekku9873',
+    github: LINKS.safeops,
     accent: '#a78bfa',
   },
   {
     number: '03',
     title: 'Multimodal Price Predictor',
-    subtitle: 'Amazon ML Challenge · Top 20% National Rank',
-    desc: 'Dual-tower neural architecture fusing BERT text embeddings and ResNet image vectors for product price regression. Ensemble with LightGBM achieved Top 20% rank among 80,000+ competitors at Amazon ML Challenge 2025.',
-    tech: ['PyTorch', 'BERT', 'ResNet', 'LightGBM', 'Scikit-Learn', 'NumPy'],
-    github: 'https://github.com/vivekku9873',
+    subtitle: 'Amazon ML Challenge · Top 20%',
+    desc: 'Dual-tower neural architecture fusing BERT text embeddings and ResNet image vectors. LightGBM ensemble achieved Top 20% among 80,000+ competitors.',
+    tech: ['PyTorch', 'BERT', 'ResNet', 'LightGBM', 'Scikit-Learn'],
+    github: LINKS.multimodal,
     accent: '#e85d5d',
   },
 ];
 
-// CERTIFICATES grouped by category
+// Correct certificate mapping based on file sizes and names
 const CERT_GROUPS = [
   {
     group: 'Cloud Certifications',
     certs: [
-      { id: 'c1', title: 'Oracle Cloud AI Foundations Associate', issuer: 'Oracle · 2025', image: '/assets/cert1.png' },
+      {
+        id: 'c4',
+        title: 'Oracle Cloud Infrastructure Certified AI Foundations Associate',
+        issuer: 'Oracle · 2025',
+        image: '/assets/cert4.png',
+      },
     ],
   },
   {
     group: 'Workshops & Residencies',
     certs: [
-      { id: 'c2', title: 'MLOps & Agentic AI Residency', issuer: 'DRDO & NIT Delhi · 2025', image: '/assets/cert2.png' },
+      {
+        id: 'c_drdo',
+        title: 'MLOps & Agentic AI Residency',
+        issuer: 'DRDO & NIT Delhi · 2025',
+        image: '/assets/drdo_mlops_badge.jpg',
+      },
     ],
   },
   {
-    group: 'Programming Certifications',
+    group: 'Programming & AI Certifications',
     certs: [
-      { id: 'c3', title: 'Mastering OOPs with Python', issuer: 'Infosys Springboard · 2024', image: '/assets/cert3.png' },
-      { id: 'c4', title: 'Machine Learning Specialist',  issuer: 'Simplilearn · 2024',        image: '/assets/cert4.png' },
+      {
+        id: 'c1',
+        title: 'Mastering OOPs with Python',
+        issuer: 'Infosys Springboard · 2024',
+        image: '/assets/cert1.png',
+      },
+      {
+        id: 'c2',
+        title: 'Machine Learning Specialist',
+        issuer: 'Simplilearn · 2024',
+        image: '/assets/cert2.png',
+      },
+      {
+        id: 'c3',
+        title: 'Learn AI with TensorFlow',
+        issuer: 'Infosys Springboard · 2024',
+        image: '/assets/cert3.png',
+      },
     ],
   },
 ];
 
 // ==========================================
-// HOOKS
+// HOOKS & UTILS
 // ==========================================
 const useReveal = () => {
   useEffect(() => {
     const els = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.06, rootMargin: '0px 0px -20px 0px' }
     );
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
 };
 
-const useTypewriter = (texts, speed = 65, pause = 2200) => {
+const useTypewriter = (texts, speed = 60, pause = 2400) => {
   const [display, setDisplay] = useState('');
   const [idx, setIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -178,31 +217,27 @@ const useTypewriter = (texts, speed = 65, pause = 2200) => {
       t = setTimeout(() => setDeleting(true), pause);
     } else if (deleting && charIdx > 0) {
       t = setTimeout(() => setCharIdx(c => c - 1), speed / 2);
-    } else {
-      setDeleting(false);
-      setIdx(i => (i + 1) % texts.length);
-    }
+    } else { setDeleting(false); setIdx(i => (i + 1) % texts.length); }
     setDisplay(current.slice(0, charIdx));
     return () => clearTimeout(t);
   }, [charIdx, deleting, idx, texts, speed, pause]);
   return display;
 };
 
-// Animated counter
 const Counter = ({ target, suffix = '' }) => {
   const [val, setVal] = useState(0);
   const ref = useRef();
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) {
-        let start = 0;
+        let s = 0;
         const end = parseFloat(target);
-        const step = end / 40;
+        const step = end / 35;
         const t = setInterval(() => {
-          start += step;
-          if (start >= end) { setVal(target); clearInterval(t); }
-          else setVal(Number.isInteger(end) ? Math.floor(start) : start.toFixed(2));
-        }, 35);
+          s += step;
+          if (s >= end) { setVal(target); clearInterval(t); }
+          else setVal(Number.isInteger(end) ? Math.floor(s) : s.toFixed(2));
+        }, 30);
         obs.disconnect();
       }
     }, { threshold: 0.5 });
@@ -213,12 +248,12 @@ const Counter = ({ target, suffix = '' }) => {
 };
 
 // ==========================================
-// NAV
+// NAVIGATION
 // ==========================================
 const Nav = ({ scrollTo }) => {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 20);
+    const h = () => setScrolled(window.scrollY > 30);
     window.addEventListener('scroll', h, { passive: true });
     return () => window.removeEventListener('scroll', h);
   }, []);
@@ -238,7 +273,7 @@ const Nav = ({ scrollTo }) => {
             </li>
           ))}
         </ul>
-        <a href="mailto:vivekku9873@gmail.com" className="btn btn-outline nav-cta">
+        <a href={LINKS.linkedin} target="_blank" rel="noreferrer" className="btn btn-outline nav-cta">
           Hire Me ↗
         </a>
       </div>
@@ -250,7 +285,7 @@ const Nav = ({ scrollTo }) => {
 // HERO
 // ==========================================
 const Hero = () => {
-  const title = useTypewriter(['AI/ML Engineer', 'Backend Architect', 'Agentic AI Developer', 'GenAI Builder']);
+  const title = useTypewriter(['AI/ML Engineer', 'Agentic AI Developer', 'GenAI Builder', 'Problem Solver']);
   return (
     <section className="hero" id="home">
       <div className="container">
@@ -290,28 +325,33 @@ const Hero = () => {
                 </svg>
                 View Projects
               </a>
-              <a
-                href="#contact"
-                className="btn btn-outline"
-              >
+              <a href="#contact" className="btn btn-outline">
                 Get In Touch
               </a>
             </div>
+
+            {/* Social icons */}
             <div className="hero-socials">
-              <a href="https://github.com/vivekku9873" target="_blank" rel="noreferrer" className="social-link">
+              <a href={LINKS.github} target="_blank" rel="noreferrer" className="social-link" title="GitHub">
                 <Github style={{ width: 18, height: 18 }} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="social-link">
+              <a href={LINKS.linkedin} target="_blank" rel="noreferrer" className="social-link" title="LinkedIn">
                 <Linkedin style={{ width: 18, height: 18 }} />
               </a>
-              <a href="mailto:vivekku9873@gmail.com" className="social-link">
+              <a href={LINKS.leetcode} target="_blank" rel="noreferrer" className="social-link" title="LeetCode">
+                <img src={SI('leetcode', '22d3ee')} alt="LeetCode" style={{ width: 18, height: 18 }} onError={e => e.target.style.display='none'} />
+              </a>
+              <a href={LINKS.codechef} target="_blank" rel="noreferrer" className="social-link" title="CodeChef">
+                <img src={SI('codechef', '22d3ee')} alt="CodeChef" style={{ width: 18, height: 18 }} onError={e => e.target.style.display='none'} />
+              </a>
+              <a href={LINKS.huggingface} target="_blank" rel="noreferrer" className="social-link" title="Hugging Face">
+                <img src={SI('huggingface', 'ffd21e')} alt="Hugging Face" style={{ width: 18, height: 18 }} onError={e => e.target.style.display='none'} />
+              </a>
+              <a href="mailto:vivekku9873@gmail.com" className="social-link" title="Email">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-              </a>
-              <a href="https://leetcode.com" target="_blank" rel="noreferrer" className="social-link" title="LeetCode">
-                <img src={SI('leetcode', '22d3ee')} alt="LeetCode" style={{ width: 18, height: 18 }} onError={e => e.target.style.display='none'} />
               </a>
             </div>
           </div>
@@ -346,15 +386,15 @@ const Hero = () => {
 const About = () => {
   const stats = [
     { value: '400', suffix: '+', label: 'DSA Problems Solved' },
-    { value: '5',   suffix: '',  label: 'Certifications' },
-    { value: '3',   suffix: '',  label: 'Major Projects' },
-    { value: '7.75',suffix: '',  label: 'CGPA / 10.0' },
+    { value: '5', suffix: '', label: 'Certifications' },
+    { value: '3', suffix: '', label: 'Major Projects' },
+    { value: '7.75', suffix: '', label: 'CGPA / 10.0' },
   ];
   const focuses = [
     { label: 'Agentic AI & Multi-Agent Systems', color: '#a78bfa' },
-    { label: 'Deep Learning & Model Training',   color: '#22d3ee' },
-    { label: 'Scalable Backend & APIs',           color: '#e85d5d' },
-    { label: 'Competitive DSA (Java)',            color: '#4ade80' },
+    { label: 'Deep Learning & Model Training', color: '#22d3ee' },
+    { label: 'Scalable Backend & APIs', color: '#e85d5d' },
+    { label: 'Problem Solving (Java DSA)', color: '#4ade80' },
   ];
   return (
     <section className="section" id="about">
@@ -367,21 +407,31 @@ const About = () => {
         </div>
         <div className="about-grid">
           <div className="reveal-left">
-            <ul className="focus-list" style={{ marginBottom: 24 }}>
+            {/* Terminal Card */}
+            <div className="terminal-card">
+              <div className="terminal-header">
+                <span className="terminal-dot" style={{ background: '#ef4444' }} />
+                <span className="terminal-dot" style={{ background: '#f59e0b' }} />
+                <span className="terminal-dot" style={{ background: '#22c55e' }} />
+                <span className="terminal-header-text">vivek.config</span>
+              </div>
+              <div className="terminal-body">
+                <div><span className="comment">// who am I</span></div>
+                <div><span className="key">name</span>: <span className="str">"Vivek Kumar"</span></div>
+                <div><span className="key">role</span>: <span className="str">"AI/ML Engineer"</span></div>
+                <div><span className="key">college</span>: <span className="str">"AKGEC, B.Tech CSE"</span></div>
+                <div><span className="key">batch</span>: <span className="num">2023–2027</span></div>
+                <div><span className="key">location</span>: <span className="str">"Delhi NCR, India"</span></div>
+                <div><span className="key">openTo</span>: <span className="str">"Internships · Full-time · WFH · Freelance"</span></div>
+              </div>
+            </div>
+
+            {/* Focus Pills */}
+            <div className="focus-tags">
               {focuses.map(f => (
-                <li key={f.label} className="focus-item">
+                <div key={f.label} className="focus-tag">
                   <span className="focus-dot" style={{ background: f.color, boxShadow: `0 0 8px ${f.color}` }} />
                   {f.label}
-                </li>
-              ))}
-            </ul>
-            <div className="about-stats">
-              {stats.map(s => (
-                <div key={s.label} className="card stat-card reveal">
-                  <div className="stat-value">
-                    <Counter target={s.value} suffix={s.suffix} />
-                  </div>
-                  <div className="stat-label">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -389,7 +439,7 @@ const About = () => {
 
           <div className="about-text reveal-right">
             <p>
-              I'm <strong>Vivek Kumar</strong> — an AI/ML Engineer and Backend Architect pursuing
+              I'm <strong>Vivek Kumar</strong> — an AI/ML Engineer pursuing
               B.Tech in Computer Science at <strong>AKGEC, Ghaziabad</strong> (Class of 2027).
             </p>
             <p>
@@ -404,7 +454,7 @@ const About = () => {
               80,000+ teams).
             </p>
             <p>
-            Beyond code, I'm a <strong>problem solver</strong> — 400+ DSA problems in Java,
+              Beyond code, I'm a <strong>problem solver</strong> — 400+ DSA problems in Java across LeetCode & CodeChef,
               an ML research enthusiast, and someone who enjoys shipping things that actually
               go live in production.
             </p>
@@ -672,8 +722,17 @@ const Contact = () => {
               </div>
             </div>
             <div className="contact-socials">
-              <a href="https://github.com/vivekku9873" target="_blank" rel="noreferrer" className="social-link"><Github style={{ width: 18, height: 18 }} /></a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="social-link"><Linkedin style={{ width: 18, height: 18 }} /></a>
+              <a href={LINKS.github} target="_blank" rel="noreferrer" className="social-link" title="GitHub"><Github style={{ width: 18, height: 18 }} /></a>
+              <a href={LINKS.linkedin} target="_blank" rel="noreferrer" className="social-link" title="LinkedIn"><Linkedin style={{ width: 18, height: 18 }} /></a>
+              <a href={LINKS.leetcode} target="_blank" rel="noreferrer" className="social-link" title="LeetCode">
+                <img src={SI('leetcode', '22d3ee')} alt="LeetCode" style={{ width: 18, height: 18 }} onError={e => e.target.style.display='none'} />
+              </a>
+              <a href={LINKS.codechef} target="_blank" rel="noreferrer" className="social-link" title="CodeChef">
+                <img src={SI('codechef', '22d3ee')} alt="CodeChef" style={{ width: 18, height: 18 }} onError={e => e.target.style.display='none'} />
+              </a>
+              <a href={LINKS.huggingface} target="_blank" rel="noreferrer" className="social-link" title="Hugging Face">
+                <img src={SI('huggingface', 'ffd21e')} alt="Hugging Face" style={{ width: 18, height: 18 }} onError={e => e.target.style.display='none'} />
+              </a>
             </div>
           </div>
 

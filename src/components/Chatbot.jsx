@@ -55,7 +55,7 @@ const respond = (input) => {
     return "Vivek Kumar is an AI/ML Engineer & Backend Architect studying B.Tech CSE at AKGEC (2023–2027). He specializes in building agentic AI systems, training deep learning models, and architecting scalable backends with FastAPI and Docker.";
   }
   if (/skill|tech|stack|language|tool|framework|know/.test(q)) {
-    return `Vivek's tech stack spans:\n• AI/ML: PyTorch, TensorFlow, LightGBM, YOLOv8, Scikit-Learn\n• GenAI: LangGraph, LangChain, ChromaDB, RAG, Gemini/Claude APIs\n• Backend: FastAPI, Node.js, MongoDB, Docker, REST APIs\n• Languages: Python, Java, JavaScript, C\n• Tools: Git, Postman, Vercel, React`;
+    return `Vivek's tech stack spans:\n• AI/ML: PyTorch, TensorFlow, LightGBM, OpenCV, Scikit-Learn, Hugging Face\n• GenAI: LangGraph, LangChain, ChromaDB, RAG, Gemini/Claude APIs\n• Backend: FastAPI, Node.js / Express (Familiar), MongoDB, MySQL, REST APIs\n• Languages: Python, Java, JavaScript, C\n• Tools: Docker, Git, GitHub, Postman, Vercel`;
   }
   if (/project|build|work|creat/.test(q)) {
     return `Here are Vivek's 3 core projects:\n\n1. **CodeMind IDE** — AI-powered coding IDE with Docker sandboxes and LangGraph auto-debugger\n2. **SafeOps AI** — Multi-agent DevOps security copilot for anomaly detection\n3. **Multimodal Price Predictor** — Amazon ML Challenge, Top 20% nationally (BERT + CNN + LightGBM)`;
@@ -176,14 +176,18 @@ const Chatbot = () => {
         {showBadge && <span className="chatbot-badge">1</span>}
         {open ? (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            <circle cx="9" cy="10" r="1" fill="currentColor"/>
-            <circle cx="12" cy="10" r="1" fill="currentColor"/>
-            <circle cx="15" cy="10" r="1" fill="currentColor"/>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2v3" />
+            <circle cx="12" cy="2" r="1" fill="currentColor" />
+            <rect x="4" y="5" width="16" height="12" rx="4" />
+            <circle cx="9" cy="10" r="1.5" fill="currentColor" />
+            <circle cx="15" cy="10" r="1.5" fill="currentColor" />
+            <path d="M9 14h6" />
+            <path d="M2 10v2" />
+            <path d="M22 10v2" />
           </svg>
         )}
       </button>
@@ -204,7 +208,7 @@ const Chatbot = () => {
             </div>
             <button className="chatbot-close-btn" onClick={() => setOpen(false)}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
           </div>
@@ -256,8 +260,8 @@ const Chatbot = () => {
               aria-label="Send"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <line x1="22" y1="2" x2="11" y2="13"/>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
               </svg>
             </button>
           </div>

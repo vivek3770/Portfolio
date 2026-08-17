@@ -1,7 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 const StarBackground = () => {
   const canvasRef = useRef(null);
+  const mouseRef = useRef({ x: -1000, y: -1000 });
+
+  const handleMouseMove = useCallback((e) => {
+    mouseRef.current = { x: e.clientX, y: e.clientY };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,69 +21,55 @@ const StarBackground = () => {
     };
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', handleMouseMove);
 
-    // ── Stars ──
-    const stars = Array.from({ length: 140 }, () => ({
-      x: Math.random(),
-      y: Math.random(),
-      r: Math.random() * 1.4 + 0.2,
-      a: Math.random() * 0.6 + 0.1,
-      speed: Math.random() * 0.007 + 0.003,
+    // Stars
+    const stars = Array.from({ length: 100 }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.3 + 0.2,
+      a: Math.random() * 0.5 + 0.08,
+      speed: Math.random() * 0.005 + 0.002,
       dir: Math.random() > 0.5 ? 1 : -1,
     }));
 
-    // ── Floating orbs (large glow blobs) ──
+    // Ambient glow orbs
     const orbs = [
-      { x: 0.15, y: 0.2,  r: 220, color: '34,211,238',   a: 0.045 },
-      { x: 0.85, y: 0.7,  r: 180, color: '167,139,250',  a: 0.04 },
-      { x: 0.5,  y: 0.9,  r: 160, color: '232,93,93',    a: 0.035 },
-      { x: 0.7,  y: 0.15, r: 130, color: '34,211,238',   a: 0.03 },
+      { x: 0.12, y: 0.18, r: 250, color: '34,211,238', a: 0.035 },
+      { x: 0.88, y: 0.72, r: 200, color: '167,139,250', a: 0.03 },
+      { x: 0.5, y: 0.92, r: 180, color: '232,93,93', a: 0.025 },
     ];
 
-    // ── Drifting network nodes ──
-    const nodes = Array.from({ length: 28 }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.8 + 0.6,
-      color: Math.random() > 0.5 ? '34,211,238' : '167,139,250',
+    // Network nodes
+    const nodes = Array.from({ length: 22 }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.28,
+      r: Math.random() * 1.6 + 0.5,
+      color: ['34,211,238', '167,139,250', '232,93,93'][Math.floor(Math.random() * 3)],
     }));
 
-    // ── Matrix rain columns ──
-    const CHARS = '01アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const COL_W = 22;
-    const cols = [];
-    const initCols = () => {
-      cols.length = 0;
-      const count = Math.floor(W / COL_W);
-      for (let i = 0; i < count; i++) {
-        if (Math.random() > 0.78) {
-          cols.push({
-            x: i * COL_W + COL_W / 2,
-            y: Math.random() * H * -1,
-            speed: Math.random() * 1.2 + 0.5,
-            chars: Array.from({ length: Math.floor(Math.random() * 12 + 5) }, () =>
-              CHARS[Math.floor(Math.random() * CHARS.length)]
-            ),
-            alpha: Math.random() * 0.07 + 0.02,
-          });
-        }
-      }
-    };
-    initCols();
-
-    // ── Scanline grid ──
-    const drawGrid = () => {
+    // Subtle hex grid
+    const drawHexGrid = () => {
       ctx.save();
-      ctx.strokeStyle = 'rgba(34,211,238,0.018)';
+      ctx.strokeStyle = 'rgba(34,211,238,0.012)';
       ctx.lineWidth = 0.5;
-      const gapX = 80, gapY = 80;
-      for (let x = 0; x < W; x += gapX) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-      }
-      for (let y = 0; y < H; y += gapY) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      const size = 50;
+      const h = size * Math.sqrt(3);
+      for (let row = -1; row < H / h + 1; row++) {
+        for (let col = -1; col < W / (size * 1.5) + 1; col++) {
+          const cx = col * size * 1.5;
+          const cy = row * h + (col % 2 ? h / 2 : 0);
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i - Math.PI / 6;
+            const px = cx + size * 0.5 * Math.cos(angle);
+            const py = cy + size * 0.5 * Math.sin(angle);
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
       }
       ctx.restore();
     };
@@ -88,10 +79,10 @@ const StarBackground = () => {
       ctx.clearRect(0, 0, W, H);
       frame++;
 
-      // Grid
-      drawGrid();
+      // Hex grid
+      drawHexGrid();
 
-      // Orbs
+      // Ambient orbs
       orbs.forEach(o => {
         const grad = ctx.createRadialGradient(o.x * W, o.y * H, 0, o.x * W, o.y * H, o.r);
         grad.addColorStop(0, `rgba(${o.color},${o.a})`);
@@ -102,46 +93,38 @@ const StarBackground = () => {
         ctx.fill();
       });
 
+      // Mouse interactive glow
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+      if (mx > 0) {
+        const grad = ctx.createRadialGradient(mx, my, 0, mx, my, 180);
+        grad.addColorStop(0, 'rgba(34,211,238,0.04)');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(mx, my, 180, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       // Stars
       stars.forEach(s => {
         s.a += s.speed * s.dir;
-        if (s.a >= 0.75) s.dir = -1;
-        if (s.a <= 0.05) s.dir = 1;
+        if (s.a >= 0.65) s.dir = -1;
+        if (s.a <= 0.04) s.dir = 1;
         ctx.beginPath();
         ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255,255,255,${s.a})`;
         ctx.fill();
       });
 
-      // Matrix rain
-      ctx.font = '11px "JetBrains Mono", monospace';
-      cols.forEach(col => {
-        col.y += col.speed;
-        if (col.y > H + 200) col.y = -200;
-        col.chars.forEach((ch, i) => {
-          const cy = col.y + i * 14;
-          if (cy < 0 || cy > H) return;
-          const brightness = Math.max(0, 1 - i / col.chars.length);
-          const a = col.alpha * brightness;
-          ctx.fillStyle = `rgba(34,211,238,${a.toFixed(3)})`;
-          ctx.fillText(ch, col.x, cy);
-        });
-        // Refresh chars occasionally
-        if (frame % 18 === 0) {
-          const ri = Math.floor(Math.random() * col.chars.length);
-          col.chars[ri] = CHARS[Math.floor(Math.random() * CHARS.length)];
-        }
-      });
-
-      // Network nodes + connections
+      // Network
       nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
+        n.x += n.vx; n.y += n.vy;
         if (n.x < 0 || n.x > W) n.vx *= -1;
         if (n.y < 0 || n.y > H) n.vy *= -1;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${n.color},0.4)`;
+        ctx.fillStyle = `rgba(${n.color},0.3)`;
         ctx.fill();
       });
 
@@ -150,13 +133,13 @@ const StarBackground = () => {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
           const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 160) {
-            const a = (1 - d / 160) * 0.09;
+          if (d < 150) {
+            const a = (1 - d / 150) * 0.07;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.strokeStyle = `rgba(34,211,238,${a})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
@@ -169,18 +152,16 @@ const StarBackground = () => {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [handleMouseMove]);
 
   return (
     <canvas
       ref={canvasRef}
       style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
-        background: 'linear-gradient(135deg, #040408 0%, #060612 50%, #040408 100%)',
+        position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none',
+        background: 'linear-gradient(160deg, #030306 0%, #060610 40%, #0a0810 100%)',
       }}
     />
   );
